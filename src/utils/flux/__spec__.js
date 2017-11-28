@@ -15,6 +15,7 @@ class SimpleView extends React.Component {
 }
 
 class View extends React.Component {
+
   componentDidMount() {
     this.extraFunction();
   }
@@ -28,6 +29,7 @@ class View extends React.Component {
   }
 
   render() {
+
     let value = this.state.BaseStore1.get('text');
 
     return(
@@ -35,8 +37,6 @@ class View extends React.Component {
     );
   }
 }
-
-View.displayName = 'CustomName';
 
 let baseStore1 = new BaseStore1('BaseStore1', { text: 'text' });
 let baseStore2 = new BaseStore2('BaseStore2', {});
@@ -153,18 +153,6 @@ describe('Connect', () => {
         instance._onChange('BaseStore1')
         expect(instance.setState).toHaveBeenCalledWith({ BaseStore1: { text: 'text' } });
       });
-    });
-  });
-
-  describe('displayName', () => {
-    it('uses the original class name', () => {
-      const connectedView = connect(SimpleView, baseStore1);
-      expect(connectedView.displayName).toEqual('SimpleView');
-    });
-
-    it('uses the any custom display name', () => {
-      const connectedView = connect(View, baseStore1);
-      expect(connectedView.displayName).toEqual('CustomName');
     });
   });
 });

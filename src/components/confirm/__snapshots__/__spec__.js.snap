@@ -6,7 +6,6 @@ exports[`Confirm default snapshot renders as expected 1`] = `
   data-component="confirm"
   data-element="bar"
   data-role="baz"
-  data-state="open"
 >
   <CSSTransitionGroup
     component="div"

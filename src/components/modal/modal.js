@@ -5,7 +5,6 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Events from './../../utils/helpers/events';
 import Browser from './../../utils/helpers/browser';
 
-const TIMEOUT = 500;
 /**
  * A Modal Component
  *
@@ -103,8 +102,8 @@ class Modal extends React.Component {
     modal: PropTypes.object
   }
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     /**
      * Tracks if event listeners are on for modal
@@ -113,29 +112,6 @@ class Modal extends React.Component {
      * @type {Boolean}
      */
     this.listening = false;
-
-    this.state = {
-      /**
-       * Sets the initial data-state of the modal
-       * @property state
-       * @type {String}
-       */
-      state: this.props.open ? 'open' : 'closed'
-    };
-  }
-
-  /**
-   * Updates the value used for the css data-state. This uses a timeout to match the length of any transition to ensure
-   * UI automation is able to target elements once they are visually ready.
-   * @method updateDataState
-   * @return {void}
-   *
-   */
-  updateDataState = () => {
-    clearTimeout(this.openTimeout);
-    this.openTimeout = setTimeout(() => {
-      this.setState({ state: this.props.open ? 'open' : 'closed' });
-    }, TIMEOUT);
   }
 
 
@@ -179,13 +155,11 @@ class Modal extends React.Component {
       // it was added as the Portal library we use messes up the callstack
       // when assigning the ref and triggering componentDidUpdate
       setTimeout(() => {
-        this.updateDataState();
         this.onOpening; // eslint-disable-line no-unused-expressions
       });
       _window.addEventListener('keyup', this.closeModal);
     } else if (!this.props.open && this.listening) {
       this.listening = false;
-      this.updateDataState();
       this.onClosing; // eslint-disable-line no-unused-expressions
       _window.removeEventListener('keyup', this.closeModal);
     }
@@ -257,13 +231,12 @@ class Modal extends React.Component {
       <div
         className={ this.mainClasses }
         { ...this.componentTags(this.props) }
-        data-state={ this.state.state }
       >
         <CSSTransitionGroup
           component='div'
           transitionName={ this.transitionName }
-          transitionEnterTimeout={ TIMEOUT }
-          transitionLeaveTimeout={ TIMEOUT }
+          transitionEnterTimeout={ 500 }
+          transitionLeaveTimeout={ 500 }
         >
           { modalHTML }
         </CSSTransitionGroup>
@@ -271,8 +244,8 @@ class Modal extends React.Component {
         <CSSTransitionGroup
           component='div'
           transitionName={ this.backgroundTransitionName }
-          transitionEnterTimeout={ TIMEOUT }
-          transitionLeaveTimeout={ TIMEOUT }
+          transitionEnterTimeout={ 500 }
+          transitionLeaveTimeout={ 500 }
         >
           { backgroundHTML }
         </CSSTransitionGroup>
