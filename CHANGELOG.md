@@ -1,3 +1,45 @@
+# 2.4.0
+
+## Improvements
+
+* Added `connect` higher order component as an intermediate step for connecting components to Flux stores through props.
+
+## CSS Changes
+
+* `SettingsRow` Adjusted paddings and margins between sections.
+* `Dialog` Ensure the heading used within a dialog has 15px padding instead of 20px.
+
+# 2.3.0
+
+## CSS Changes
+
+* `Menu` has been updated based on slightly new designs. `MenuItem` now supports the `icon` prop.
+* `Portrait` size `extra-small` has reduced from `26px` to `25px`.
+* `Portrait` size `medium-small` has reduced from `50px` to `40px`.
+* `Profile` has increased margin between the image and text.
+* `Dialog` bottom padding has increased by 8px.
+
+## Improvements
+
+* `Modal` now has a data-state element that begins as default, set to open once transition to open is complete and is set to closed once the transition to closed is complete.
+
+## New Components
+
+* `ButtonToggleGroup` is a component that allows a group of ButtonToggles to behave as a single form component with label, field help, validation message, warning message, and info message support.
+
+# 2.2.3
+
+* Fix table-ajax to only set data-state to loaded once all of the data has been set. This resolves an issue when automating user scenarios allowing us to reliabliy wait for the loaded state to be set, before moving on.
+
+# 2.2.2
+
+* DropdownFilter now uses a stylized Link component for the Create button.
+* DropdownFilter now has `createText` & `createIconType` props for customizable create button text and create button Icons (limited to current Carbon Icon types).
+
+## Fixes
+
+Ensures that `displayName` is set to the original component's name when connecting to a store using Carbon's flux helper. We have noticed Jest snapshot's have started to default to `View` when connected to a store using our flux connector, this change will ensure the display name is maintained.
+
 # 2.2.1
 
 ## Fixes
@@ -54,6 +96,11 @@ The following updates have been made to Carbon components to align with design u
 ## Demo Site
 
 * Upgrades `react-highlight`, which removes the last `createClass` warning from React.
+
+# 2.1.1
+
+* DropdownFilter now uses a stylized Link component for the Create button.
+* DropdownFilter now has `createText` & `createIconType` props for customizable create button text and create button Icons (limited to current Carbon Icon types).
 
 # 2.1.0
 
