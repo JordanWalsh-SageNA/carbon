@@ -24,7 +24,7 @@ describe('Modal', () => {
         jest.useFakeTimers();
         onCancel = jasmine.createSpy('cancel');
         wrapper = shallow(
-          <Modal open onCancel={ onCancel } />
+          <Modal open={ true } onCancel={ onCancel } />
         );
       });
 
@@ -39,16 +39,6 @@ describe('Modal', () => {
         jest.runAllTimers();
         expect(mockWindow.addEventListener.calls.count()).toEqual(1);
         expect(mockWindow.addEventListener).toHaveBeenCalledWith('keyup', wrapper.instance().closeModal);
-      });
-
-      it('clears the opentimeout and sets data state to open', () => {
-        spyOn(mockWindow, 'removeEventListener');
-        spyOn(window, 'setTimeout');
-        jest.useFakeTimers();
-        wrapper.instance().componentDidUpdate();
-        jest.runTimersToTime(500);
-        expect(clearTimeout).toHaveBeenCalled();
-        expect(wrapper.state()).toEqual({ state: 'open' });
       });
 
       describe('when the modal is already listening', () => {
@@ -76,17 +66,6 @@ describe('Modal', () => {
         expect(mockWindow.removeEventListener.calls.count()).toEqual(1);
         expect(mockWindow.removeEventListener).toHaveBeenCalledWith('keyup', wrapper.instance().closeModal);
       });
-
-      it('clears the opentimeout and sets data state to closed', () => {
-        spyOn(mockWindow, 'removeEventListener');
-        spyOn(window, 'setTimeout');
-        jest.useFakeTimers();
-        wrapper.instance().listening = true;
-        wrapper.instance().componentDidUpdate();
-        jest.runTimersToTime(500);
-        expect(clearTimeout).toHaveBeenCalled();
-        expect(wrapper.state()).toEqual({ state: 'closed' });
-      });
     });
   });
 
@@ -95,7 +74,7 @@ describe('Modal', () => {
       beforeEach(() => {
         onCancel = jasmine.createSpy('cancel');
         wrapper = shallow(
-          <Modal open onCancel={ onCancel } />
+          <Modal open={ true } onCancel={ onCancel } />
         );
       });
 
@@ -119,7 +98,7 @@ describe('Modal', () => {
     describe('when disableEscKey is true', () => {
       onCancel = jasmine.createSpy('cancel');
       wrapper = shallow(
-        <Modal disableEscKey open onCancel={ onCancel } />
+        <Modal disableEscKey={ true } open={ true } onCancel={ onCancel } />
       );
 
       it('does not call onCancel', () => {
@@ -132,11 +111,11 @@ describe('Modal', () => {
   describe('backgroundHTML', () => {
     describe('when enableBackgroundUI is false', () => {
       it('renders children', () => {
-        wrapper = shallow(
+        let wrapper = shallow(
           <Modal
             onCancel={ () => {} }
             onConfirm={ () => {} }
-            open
+            open={ true }
             enableBackgroundUI={ false }
           />
         );
@@ -146,12 +125,12 @@ describe('Modal', () => {
 
     describe('when enableBackgroundUI is true', () => {
       it('renders children', () => {
-        wrapper = shallow(
+        let wrapper = shallow(
           <Modal
             onCancel={ () => {} }
             onConfirm={ () => {} }
-            open
-            enableBackgroundUI
+            open={ true }
+            enableBackgroundUI={ true }
           />
         );
         expect(wrapper).toMatchSnapshot();
