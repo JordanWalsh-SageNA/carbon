@@ -391,7 +391,7 @@ describe('InputValidation', () => {
             wrapper.instance()._dialog = {
               offsetWidth: 10
             };
-            wrapper.find(Component).node.validationMessage = {
+            wrapper.find(Component).instance().validationMessage = {
               className: "",
               offsetWidth: 10,
               offsetLeft: 10,
@@ -402,7 +402,7 @@ describe('InputValidation', () => {
               }
             };
             input.simulate('focus');
-            expect(wrapper.find(Component).node.validationMessage.className).toEqual(' common-input__message--flipped');
+            expect(wrapper.find(Component).instance().validationMessage.className).toEqual(' common-input__message--flipped');
           });
         });
 
@@ -1213,12 +1213,12 @@ describe('InputValidation', () => {
 
       it('returns an info icon', () => {
         expect(instance.validationHTML[0].props.type).toEqual('info');
-        expect(wrapper.find('.common-input__icon.common-input__icon--info').exists()).toBeTruthy();
+        expect(instance.validationHTML[0].props.className).toEqual('common-input__icon common-input__icon--info');
       });
 
       it('returns a div for the info message', () => {
-        expect(wrapper.find('.common-input__message-wrapper').exists()).toBeTruthy();
-        expect(wrapper.find('.common-input__message.common-input__message--info').exists()).toBeTruthy();
+        expect(instance.validationHTML[1].props.className).toEqual('common-input__message-wrapper');
+        expect(instance.validationHTML[0].props.className).toEqual('common-input__icon common-input__icon--info');
         expect(instance.validationHTML[1].props.children.props.children).toEqual('foo');
       });
 
@@ -1333,6 +1333,37 @@ describe('InputValidation', () => {
           inputs: { "123": {} }
         };
         expect(instance.isAttachedToForm).toBeTruthy();
+      });
+    });
+  });
+
+  describe('displayName', () => {
+    class Foo extends React.Component { // eslint-disable-line react/no-multi-comp
+      bar = () => {
+        return 'bar';
+      }
+    }
+
+    const displayName = 'FooClass';
+
+    describe('when ComposedComponent.displayName is defined', () => {
+      beforeEach(() => {
+        Foo.displayName = displayName;
+      });
+      afterEach(() => {
+        Foo.displayName = undefined;
+      });
+
+      it('sets Component.displayName to ComposedComponent.displayName', () => {
+        const DecoratedComponent = InputValidation(Foo);
+        expect(DecoratedComponent.displayName).toBe(displayName);
+      });
+    });
+
+    describe('when ComposedComponent.displayName is undefined', () => {
+      it('sets Component.displayName to ComposedComponent.name', () => {
+        const DecoratedComponent = InputValidation(Foo);
+        expect(DecoratedComponent.displayName).toBe('Foo');
       });
     });
   });

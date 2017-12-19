@@ -1,3 +1,92 @@
+# 2.6.0
+
+## Package Updates
+
+* Enzyme has been updated to v3.2.0
+
+## Improvements
+
+* `Date`'s getter `datePickerProps()` now checks the date value before returning
+* `Dialog`'s `centerDialog` and `focusDialog` methods won't attempt to run if the dialog isn't present
+* `Form`'s `checkStickyFooter` method won't attempt to run if the form isn't present
+* `Table`'s `resizeTable` method won't attempt to run if the table isn't present
+* Fixed tests broken by Enzyme major version bump.
+
+# 2.5.3
+
+## Bug Fixes
+
+* Revert the `Profile` component changes: `darkBackground` is false by default, and the name and email render using the inherited `body` text colour.
+
+# 2.5.2
+
+## Bug Fixes
+
+* Adding a transform to an instance of a service class was applying the transform to all other instances. This change ensures the transform is only applied to the specific instance.
+* Remove space from clearfix psuedoclasses that was creating a space character that was pushing layouts out of line
+
+# 2.5.1
+
+## Fixes
+
+Resolves missing `assets` file from v2.5.0.
+
+# 2.5.0
+
+## Improvements
+
+* `Portrait` can now render an empty string for the alt attribute.
+* Improve the contrast of the text in the `Profile` component, and the `Portrait` component when `darkBackground={ true }`.
+* Changed type of prop `tooltipMessage` of `tooltip-decorator` from string to node to allow children.
+
+## Fixes
+
+* Set the `Component.displayName` on all decorators. **NB** You may need to update your snapshots as a result of this to change the component name to something more accurate
+* Handles an empty body (such as that with a 204) more robustly ([#1631](https://github.com/Sage/carbon/issues/1631))
+* `Rainbow` - fixes a bug in which the component was unresponsive to mouse events.
+
+# 2.4.0
+
+## Improvements
+
+* Added `connect` higher order component as an intermediate step for connecting components to Flux stores through props.
+
+## CSS Changes
+
+* `SettingsRow` Adjusted paddings and margins between sections.
+* `Dialog` Ensure the heading used within a dialog has 15px padding instead of 20px.
+
+# 2.3.0
+
+## CSS Changes
+
+* `Menu` has been updated based on slightly new designs. `MenuItem` now supports the `icon` prop.
+* `Portrait` size `extra-small` has reduced from `26px` to `25px`.
+* `Portrait` size `medium-small` has reduced from `50px` to `40px`.
+* `Profile` has increased margin between the image and text.
+* `Dialog` bottom padding has increased by 8px.
+
+## Improvements
+
+* `Modal` now has a data-state element that begins as default, set to open once transition to open is complete and is set to closed once the transition to closed is complete.
+
+## New Components
+
+* `ButtonToggleGroup` is a component that allows a group of ButtonToggles to behave as a single form component with label, field help, validation message, warning message, and info message support.
+
+# 2.2.3
+
+* Fix table-ajax to only set data-state to loaded once all of the data has been set. This resolves an issue when automating user scenarios allowing us to reliabliy wait for the loaded state to be set, before moving on.
+
+# 2.2.2
+
+* DropdownFilter now uses a stylized Link component for the Create button.
+* DropdownFilter now has `createText` & `createIconType` props for customizable create button text and create button Icons (limited to current Carbon Icon types).
+
+## Fixes
+
+Ensures that `displayName` is set to the original component's name when connecting to a store using Carbon's flux helper. We have noticed Jest snapshot's have started to default to `View` when connected to a store using our flux connector, this change will ensure the display name is maintained.
+
 # 2.2.1
 
 ## Fixes
